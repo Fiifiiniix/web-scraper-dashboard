@@ -8,9 +8,11 @@ import json
 app = Dash(__name__)
 app.title = "BTC Live Dashboard"
 
-# Charger les données du CSV
+# Charger les données du CSV (Scraper)
 def load_data():
-    df = pd.read_csv("../Scraper/btc_prices.csv", names=["datetime", "price"])
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(base_dir, "..", "Scraper", "btc_prices.csv")
+    df = pd.read_csv(csv_path, names=["datetime", "price"])
     df["datetime"] = pd.to_datetime(df["datetime"])
     return df
 
@@ -27,7 +29,7 @@ def load_daily_report():
             return json.load(f)
     return None
 
-# Layout du dashboard
+# Layout de l'app
 app.layout = html.Div([
     html.H1("Prix du Bitcoin (BTC/USDT)", style={"textAlign": "center"}),
     html.Div(id="last-price", style={"textAlign": "center", "fontSize": 28, "marginBottom": 20}),
@@ -37,7 +39,7 @@ app.layout = html.Div([
     dcc.Interval(id="interval", interval=5*60*1000, n_intervals=0)
 ])
 
-# Mise à jour automatique
+# Callback automatique
 @app.callback(
     [Output("last-price", "children"),
      Output("price-graph", "figure"),
