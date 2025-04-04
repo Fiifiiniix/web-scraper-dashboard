@@ -31,12 +31,13 @@ report = {
     "volatility": round(volatility, 2)
 }
 
-# Sauvegarder dans un fichier JSON
-output_dir = "Dashboard/reports"
-os.makedirs(output_dir, exist_ok=True)
-output_path = f"{output_dir}/report-{today}.json"
+# Sauvegarde dans le dossier Reports/DailyReports/
+base_dir = os.path.dirname(os.path.abspath(__file__))
+report_dir = os.path.join(base_dir, "DailyReports")
+os.makedirs(report_dir, exist_ok=True)
+output_path = os.path.join(report_dir, f"report-{today}.json")
+
 with open(output_path, "w") as f:
     json.dump(report, f, indent=4)
-
 
 print(f"[OK] Rapport généré : {output_path}")
