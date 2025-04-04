@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 # Lire les données CSV
-csv_path = "../Scraper/btc_prices.csv"
+csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Scraper", "btc_prices.csv")
 df = pd.read_csv(csv_path, names=["datetime", "price"])
 df["datetime"] = pd.to_datetime(df["datetime"])
 df["price"] = pd.to_numeric(df["price"], errors='coerce')
