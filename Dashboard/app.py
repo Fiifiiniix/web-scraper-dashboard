@@ -35,7 +35,7 @@ app.layout = html.Div([
     html.Div(id="last-price", style={"textAlign": "center", "fontSize": 28, "marginBottom": 20}),
     dcc.Graph(id="price-graph"),
     html.H2("Rapport journalier", style={"marginTop": 40, "textAlign": "center"}),
-    html.Div(id="daily-report", style={"margin": "0 auto", "width": "60%", "fontSize": 18}),
+    html.Div(id="daily-report", style={"margin": "0 auto", "width": "60%", "fontSize": 20, "lineHeight": "2em"}),
     dcc.Interval(id="interval", interval=5*60*1000, n_intervals=0)
 ])
 
@@ -66,13 +66,14 @@ def update_dashboard(n):
 
     report = load_daily_report()
     if report:
-        report_text = f"""
-Date : {report['date']}  
-Prix d'ouverture : {report['open_price']} USDT  
-Prix de clôture : {report['close_price']} USDT  
-Variation : {report['change_pct']}%  
-Volatilité : {report['volatility']}
-"""
+        report_text = html.Ul([
+    	html.Li(f"📅 Date : {report['date']}"),
+    	html.Li(f"🟢 Prix d'ouverture : {report['open_price']} USDT"),
+    	html.Li(f"🔴 Prix de clôture : {report['close_price']} USDT"),
+    	html.Li(f"📈 Variation : {report['change_pct']}%"),
+    	html.Li(f"📊 Volatilité : {report['volatility']}")
+	])
+
     else:
         report_text = "Aucun rapport disponible pour aujourd'hui."
 
