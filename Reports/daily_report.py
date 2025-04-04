@@ -31,7 +31,8 @@ report = {
     "volatility": round(volatility, 2)
 }
 
-# Sauvegarde dans le dossier Reports/DailyReports/
+# Sauvegarder dans un fichier JSON
+>>>>>>> 911f5721 (Sauvegarde des changements)
 base_dir = os.path.dirname(os.path.abspath(__file__))
 report_dir = os.path.join(base_dir, "DailyReports")
 os.makedirs(report_dir, exist_ok=True)
